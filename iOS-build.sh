@@ -43,14 +43,15 @@ if [ ! -d "$SDKROOT" ]; then
     exit 1
 fi
 
-export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/4.2.1/include/ -I$SDKROOT/usr/include/"
+export MACOSX_DEPLOYMENT_TARGET='10.6.7'
+export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/i686-apple-darwin10/4.2.1/include/ -I$SDKROOT/usr/include/"
 export CFLAGS="$CPPFLAGS -pipe -no-cpp-precomp -isysroot $SDKROOT"
 export LDFLAGS="-isysroot $SDKROOT"
 export CPP="/usr/bin/cpp $CPPFLAGS"
 
 # build for iPhone Simulator
 ./configure CC="$DEVROOT/usr/bin/i686-apple-darwin10-llvm-gcc-4.2 -m32" \
-            LD="$DEVROOT/usr/bin/ld" --disable-toolbox-glue --host=i386-apple-darwin --prefix=/python
+            LD="$DEVROOT/usr/bin/ld" --disable-toolbox-glue --prefix=/python
 make HOSTPYTHON=./hostpython HOSTPGEN=./Parser/hostpgen \
      CROSS_COMPILE_TARGET=yes
 
@@ -72,14 +73,16 @@ if [ ! -d "$SDKROOT" ]; then
     exit 1
 fi
 
+export MACOSX_DEPLOYMENT_TARGET='10.6.7'
 export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/4.2.1/include/ -I$SDKROOT/usr/include/"
-export CFLAGS="$CPPFLAGS -pipe -no-cpp-precomp -isysroot $SDKROOT"
+export CFLAGS="$CPPFLAGS -pipe -no-cpp-precomp -isysroot $SDKROOT "
 export LDFLAGS="-isysroot $SDKROOT -Lextralibs/"
 export CPP="/usr/bin/cpp $CPPFLAGS"
 
 # make a link to a differently named library for who knows what reason
 mkdir extralibs
-ln -s "$SDKROOT/usr/lib/libgcc_s.1.dylib" extralibs/libgcc_s.10.4.dylib
+ln -s "$SDKROOT/usr/lib/libgcc_s.1.dylib" extralibs/libgcc_s.10.5.dylib
+ln -s "$SDKROOT/usr/lib/crt1.o" extralibs/crt1.10.5.o
 
 # build for iPhone
 ./configure CC="$DEVROOT/usr/bin/arm-apple-darwin10-llvm-gcc-4.2" \
