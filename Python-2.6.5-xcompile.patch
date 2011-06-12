@@ -1,6 +1,5 @@
 diff -uN Python-2.6.2/configure Python-2.6.2POld/configure
 --- Python-2.6.2/configure	2009-03-31 03:56:14.000000000 +1000
-
 @@ -24326,14 +24326,14 @@
  
  { echo "$as_me:$LINENO: checking for %zd printf() format support" >&5
